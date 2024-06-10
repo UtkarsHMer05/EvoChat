@@ -23,7 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    mq = MediaQuery.of(context).size;
+    // mq = MediaQuery.of(context).size;
     return Scaffold(
       //app bar themes and icons
       appBar: AppBar(
@@ -41,19 +41,20 @@ class _LoginScreenState extends State<LoginScreen> {
               right: _isAnimate ? mq.width * .175 : -mq.width * .7,
               duration: const Duration(seconds: 1),
               child: Image.asset("assets/images/chat.png")),
-          Positioned(
+          AnimatedPositioned(
               bottom: mq.height * .15,
               width: mq.width * .9,
-              left: mq.width * .05,
+              left: _isAnimate ? mq.width * .05 : -mq.width * .9,
               height: mq.height * .07,
+              duration: const Duration(seconds: 1),
               child: ElevatedButton.icon(
                 style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.greenAccent,
                     shape: const StadiumBorder(),
                     elevation: 1),
                 onPressed: () {
-                  Navigator.pushReplacement(
-                      context, MaterialPageRoute(builder: (_) => HomeScreen()));
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (_) => const HomeScreen()));
                 },
                 icon: Image.asset(
                   "assets/images/google.png",

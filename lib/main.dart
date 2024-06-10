@@ -1,15 +1,23 @@
 import 'package:evo_chat/firebase_options.dart';
-import 'package:evo_chat/screens/auth/login_screen.dart';
+import 'package:evo_chat/screens/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 //global object for accessing device screen size
 late Size mq;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  _initializeFirebase();
-  runApp(const MyApp());
+  //for entering full screen mode
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+  //for setting orientation to portrait only
+  SystemChrome.setPreferredOrientations(
+          [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown])
+      .then((value) {
+    _initializeFirebase();
+    runApp(const MyApp());
+  });
 }
 
 class MyApp extends StatelessWidget {
@@ -33,7 +41,7 @@ class MyApp extends StatelessWidget {
           backgroundColor: Color.fromARGB(255, 0, 255, 162),
         ),
       ),
-      home: const LoginScreen(),
+      home: const SplashScreen(),
     );
   }
 }
