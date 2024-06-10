@@ -1,10 +1,14 @@
+import 'package:evo_chat/firebase_options.dart';
 import 'package:evo_chat/screens/auth/login_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 //global object for accessing device screen size
 late Size mq;
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  _initializeFirebase();
   runApp(const MyApp());
 }
 
@@ -32,4 +36,8 @@ class MyApp extends StatelessWidget {
       home: const LoginScreen(),
     );
   }
+}
+
+_initializeFirebase() async {
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 }

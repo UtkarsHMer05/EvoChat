@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "455360497372",
+    "project_id": "evochat-4c79e",
+    "storage_bucket": "evochat-4c79e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:455360497372:android:a1de19c1d5341c5f24d619",
+        "android_client_info": {
+          "package_name": "com.example.evo_chat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBs2cmt-M04y-eBDURfq6uI9fyAuclmej0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
