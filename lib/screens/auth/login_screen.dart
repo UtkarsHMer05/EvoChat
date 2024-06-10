@@ -1,4 +1,5 @@
 import 'package:evo_chat/main.dart';
+import 'package:evo_chat/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -9,6 +10,17 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  bool _isAnimate = false;
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration(milliseconds: 500), () {
+      setState(() {
+        _isAnimate = true;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     mq = MediaQuery.of(context).size;
@@ -19,12 +31,15 @@ class _LoginScreenState extends State<LoginScreen> {
         //title for app bar
         title: const Text(" Welcome to EvoChat 🚀"),
       ),
+      //body
       body: Stack(
         children: [
-          Positioned(
+          //app logo
+          AnimatedPositioned(
               top: mq.height * .15,
               width: mq.width * .7,
-              left: mq.width * .175,
+              right: _isAnimate ? mq.width * .175 : -mq.width * .7,
+              duration: const Duration(seconds: 1),
               child: Image.asset("assets/images/chat.png")),
           Positioned(
               bottom: mq.height * .15,
@@ -36,7 +51,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     backgroundColor: Colors.greenAccent,
                     shape: const StadiumBorder(),
                     elevation: 1),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushReplacement(
+                      context, MaterialPageRoute(builder: (_) => HomeScreen()));
+                },
                 icon: Image.asset(
                   "assets/images/google.png",
                   height: mq.height * .65,
