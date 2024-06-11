@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:evo_chat/main.dart';
 import 'package:evo_chat/models/chat_user.dart';
 import 'package:flutter/cupertino.dart';
@@ -23,27 +24,46 @@ class _ChatUserCardState extends State<ChatUserCard> {
       child: InkWell(
         onTap: () {},
         child: ListTile(
-          leading: const CircleAvatar(
             //user profile picture
-            child: Icon(
-              CupertinoIcons.person_fill,
-              color: Colors.blueAccent,
+            // child: Icon(
+            //   CupertinoIcons.person_fill,
+            //   color: Colors.blueAccent,
+            // ),
+            leading: ClipRRect(
+              borderRadius: BorderRadius.circular(mq.height * .2),
+              child: CachedNetworkImage(
+                height: mq.height * .05,
+                width: mq.width * .1,
+                fit: BoxFit.fill,
+                imageUrl: widget.user.image,
+                placeholder: (context, url) => CircularProgressIndicator(),
+                errorWidget: (context, url, error) => const CircleAvatar(
+                    child: Icon(
+                  CupertinoIcons.person_fill,
+                  color: Colors.blueAccent,
+                )),
+              ),
             ),
-            backgroundColor: Colors.greenAccent,
-          ),
-          //user name
-          title: Text(widget.user.name),
-          subtitle: Text(
-            //user last message
-            widget.user.about,
-            maxLines: 1,
-          ),
-          trailing: Text(
-            //user last time sent message
-            '12:00 PM',
-            style: TextStyle(color: Colors.black54),
-          ),
-        ),
+
+            //user name
+            title: Text(widget.user.name),
+            subtitle: Text(
+              //user last message
+              widget.user.about,
+              maxLines: 1,
+            ),
+            // trailing: Text(
+            //   //user last time sent message
+            //   '12:00 PM',
+            //   style: TextStyle(color: Colors.black54),
+            // ),
+            trailing: Container(
+              width: 15,
+              height: 15,
+              decoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 107, 220, 111),
+                  borderRadius: BorderRadius.circular(20)),
+            )),
       ),
     );
   }

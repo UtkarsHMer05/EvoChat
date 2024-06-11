@@ -1,6 +1,7 @@
 import 'package:evo_chat/api/api.dart';
 import 'package:evo_chat/main.dart';
 import 'package:evo_chat/models/chat_user.dart';
+import 'package:evo_chat/screens/profile_screen.dart';
 import 'package:evo_chat/widgets/chat_user_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
             CupertinoIcons.home,
             size: 27,
           ),
-          //tilte for app bar
+          //title for app bar
           title: const Text("EvoChat 🚀"),
           actions: [
             IconButton(
@@ -36,7 +37,15 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             IconButton(
-              onPressed: () {},
+              //profile setting
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => ProfileScreen(
+                              user: list[0],
+                            )));
+              },
               icon: const Icon(
                 Icons.more_vert_sharp,
                 size: 30,
