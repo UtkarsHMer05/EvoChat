@@ -58,5 +58,16 @@
     </array>
 	<key>GIDClientID</key>
     <string>455360497372-3r4vpjchafhp7f4o4rlgld0bdskm5jos.apps.googleusercontent.com</string>
+	<!-- Permissions for picking image from gallery or taking image from camera-->
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>App requires access to the photo library for picking pictures.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>App requires access to the camera for taking pictures.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Used to capture audio for image picker.</string>
+
+	<!--For Storing Image into Gallery-->
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>This app requires read and write access to the photo library.</string>
 </dict>
 </plist>

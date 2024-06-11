@@ -22,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
 
       SystemChrome.setSystemUIOverlayStyle(
-          SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+          SystemUiOverlayStyle(systemNavigationBarColor: Colors.white));
       //navigation to home screen
       if (Api.auth.currentUser != null) {
         print("\nUser: ${Api.auth.currentUser}");
