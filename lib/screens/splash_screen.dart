@@ -1,7 +1,7 @@
+import 'package:evo_chat/api/api.dart';
 import 'package:evo_chat/main.dart';
 import 'package:evo_chat/screens/auth/login_screen.dart';
 import 'package:evo_chat/screens/home_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -24,8 +24,8 @@ class _SplashScreenState extends State<SplashScreen> {
       SystemChrome.setSystemUIOverlayStyle(
           SystemUiOverlayStyle(statusBarColor: Colors.transparent));
       //navigation to home screen
-      if (FirebaseAuth.instance.currentUser != null) {
-        print("\nUser: ${FirebaseAuth.instance.currentUser}");
+      if (Api.auth.currentUser != null) {
+        print("\nUser: ${Api.auth.currentUser}");
 
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (_) => const HomeScreen()));
