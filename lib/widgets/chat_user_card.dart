@@ -1,9 +1,12 @@
 import 'package:evo_chat/main.dart';
+import 'package:evo_chat/models/chat_user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ChatUserCard extends StatefulWidget {
-  const ChatUserCard({super.key});
+  final ChatUser user;
+
+  const ChatUserCard({super.key, required this.user});
 
   @override
   State<ChatUserCard> createState() => _ChatUserCardState();
@@ -19,8 +22,8 @@ class _ChatUserCardState extends State<ChatUserCard> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       child: InkWell(
         onTap: () {},
-        child: const ListTile(
-          leading: CircleAvatar(
+        child: ListTile(
+          leading: const CircleAvatar(
             //user profile picture
             child: Icon(
               CupertinoIcons.person_fill,
@@ -29,10 +32,10 @@ class _ChatUserCardState extends State<ChatUserCard> {
             backgroundColor: Colors.greenAccent,
           ),
           //user name
-          title: Text("Utkarsh"),
+          title: Text(widget.user.name),
           subtitle: Text(
             //user last message
-            "Last User Message",
+            widget.user.about,
             maxLines: 1,
           ),
           trailing: Text(
