@@ -63,6 +63,9 @@ class DefaultFirebaseOptions {
     messagingSenderId: '455360497372',
     projectId: 'evochat-4c79e',
     storageBucket: 'evochat-4c79e.appspot.com',
+    androidClientId: '455360497372-lf2nk0d3mvidg3if30imh1p0ns9rf930.apps.googleusercontent.com',
+    iosClientId: '455360497372-3r4vpjchafhp7f4o4rlgld0bdskm5jos.apps.googleusercontent.com',
     iosBundleId: 'com.example.evoChat',
   );
+
 }

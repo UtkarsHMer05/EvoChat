@@ -12,7 +12,20 @@
           "package_name": "com.example.evo_chat"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "455360497372-lf2nk0d3mvidg3if30imh1p0ns9rf930.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.evo_chat",
+            "certificate_hash": "6bda8e7371f7ec3a68bb9dcb6f751c1e93bc3f5f"
+          }
+        },
+        {
+          "client_id": "455360497372-in9rmul833k60mhufnbmo9cmlaqd5k1a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBs2cmt-M04y-eBDURfq6uI9fyAuclmej0"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "455360497372-in9rmul833k60mhufnbmo9cmlaqd5k1a.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "455360497372-3r4vpjchafhp7f4o4rlgld0bdskm5jos.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.evoChat"
+              }
+            }
+          ]
         }
       }
     }

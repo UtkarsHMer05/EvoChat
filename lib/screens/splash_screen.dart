@@ -1,5 +1,5 @@
 import 'package:evo_chat/main.dart';
-import 'package:evo_chat/screens/home_screen.dart';
+import 'package:evo_chat/screens/auth/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -23,7 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
           SystemUiOverlayStyle(statusBarColor: Colors.transparent));
       //navigation to home screen
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (_) => const HomeScreen()));
+          context, MaterialPageRoute(builder: (_) => const LoginScreen()));
     });
   }
 
