@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:evo_chat/api/api.dart';
 import 'package:evo_chat/helper/dialogs.dart';
@@ -8,6 +10,7 @@ import 'package:evo_chat/screens/home_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ProfileScreen extends StatefulWidget {
   final ChatUser user;
@@ -20,6 +23,7 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   final _formKey = GlobalKey<FormState>();
+  String? _image;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -89,23 +93,35 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     Stack(
                       children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(mq.height * .1),
-                          child: CachedNetworkImage(
-                            height: mq.height * .2,
-                            width: mq.width * .4,
-                            fit: BoxFit.fill,
-                            imageUrl: widget.user.image,
-                            placeholder: (context, url) =>
-                                CircularProgressIndicator(),
-                            errorWidget: (context, url, error) =>
-                                const CircleAvatar(
-                                    child: Icon(
-                              CupertinoIcons.person_fill,
-                              color: Colors.blueAccent,
-                            )),
-                          ),
-                        ),
+                        _image != null
+                            ? ClipRRect(
+                                borderRadius:
+                                    BorderRadius.circular(mq.height * .1),
+                                child: Image.file(
+                                  File(_image!),
+                                  height: mq.height * .2,
+                                  width: mq.width * .4,
+                                  fit: BoxFit.cover,
+                                ),
+                              )
+                            : ClipRRect(
+                                borderRadius:
+                                    BorderRadius.circular(mq.height * .1),
+                                child: CachedNetworkImage(
+                                  height: mq.height * .2,
+                                  width: mq.width * .4,
+                                  fit: BoxFit.cover,
+                                  imageUrl: widget.user.image,
+                                  placeholder: (context, url) =>
+                                      CircularProgressIndicator(),
+                                  errorWidget: (context, url, error) =>
+                                      const CircleAvatar(
+                                          child: Icon(
+                                    CupertinoIcons.person_fill,
+                                    color: Colors.blueAccent,
+                                  )),
+                                ),
+                              ),
                         Positioned(
                           bottom: 0,
                           right: 0,
@@ -133,7 +149,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     SizedBox(height: mq.height * .06),
                     TextFormField(
                       initialValue: widget.user.name,
-                      onSaved: (val) => Api.me.name = val ?? "",
+                      onSaved: (val) => Api.me.name = val ?? " ",
                       validator: (val) => val != null && val.isNotEmpty
                           ? null
                           : "Required Field",
@@ -151,7 +167,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     SizedBox(height: mq.height * .02),
                     TextFormField(
                       initialValue: widget.user.about,
-                      onSaved: (val) => Api.me.about = val ?? "",
+                      onSaved: (val) => Api.me.about = val ?? " ",
                       validator: (val) => val != null && val.isNotEmpty
                           ? null
                           : "Required Field",
@@ -225,14 +241,40 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           backgroundColor: Colors.white,
                           shape: CircleBorder(),
                           fixedSize: Size(mq.width * .3, mq.height * .15)),
-                      onPressed: () {},
+                      onPressed: () async {
+                        final ImagePicker picker = ImagePicker();
+                        final XFile? image = await picker.pickImage(
+                          source: ImageSource.gallery,
+                        );
+                        if (image != null) {
+                          print(
+                              'Image Path: ${image.path} -- MimeType: ${image.mimeType}');
+                          setState(() {
+                            _image = image.path;
+                          });
+                          Api.updateProfilePicture(File(_image!));
+                          Navigator.pop(context);
+                        }
+                      },
                       child: Image.asset('assets/images/image_add.png')),
                   ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white,
                           shape: CircleBorder(),
                           fixedSize: Size(mq.width * .3, mq.height * .15)),
-                      onPressed: () {},
+                      onPressed: () async {
+                        final ImagePicker picker = ImagePicker();
+                        final XFile? image =
+                            await picker.pickImage(source: ImageSource.camera);
+                        if (image != null) {
+                          print('Image Path: ${image.path}');
+                          setState(() {
+                            _image = image.path;
+                          });
+                          Api.updateProfilePicture(File(_image!));
+                          Navigator.pop(context);
+                        }
+                      },
                       child: Image.asset('assets/images/camera.png'))
                 ],
               )
