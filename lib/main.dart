@@ -1,12 +1,12 @@
-import 'dart:developer';
+// import 'dart:developer';
 
 import 'package:evo_chat/firebase_options.dart';
 import 'package:evo_chat/screens/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_notification_channel/flutter_notification_channel.dart';
-import 'package:flutter_notification_channel/notification_importance.dart';
+// import 'package:flutter_notification_channel/flutter_notification_channel.dart';
+// import 'package:flutter_notification_channel/notification_importance.dart';
 
 //global object for accessing device screen size
 late Size mq;
