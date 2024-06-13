@@ -1,17 +1,18 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:evo_chat/api/api.dart';
-import 'package:evo_chat/helper/dialogs.dart';
-import 'package:evo_chat/main.dart';
-import 'package:evo_chat/models/chat_user.dart';
-import 'package:evo_chat/screens/auth/login_screen.dart';
-import 'package:evo_chat/screens/home_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
+import '../helper/dialogs.dart';
+import '../main.dart';
+import '../models/chat_user.dart';
+import 'auth/login_screen.dart';
 
+//profile screen -- to show signed in user info
 class ProfileScreen extends StatefulWidget {
   final ChatUser user;
 
@@ -24,104 +25,94 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   final _formKey = GlobalKey<FormState>();
   String? _image;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+      // for hiding keyboard
+      onTap: FocusScope.of(context).unfocus,
       child: Scaffold(
-          //app bar themes and icons
-          appBar: AppBar(
-            //tilte for app bar
-            title: const Text("Profile Screen 👔"),
-            automaticallyImplyLeading: false,
-            actions: [
-              IconButton(
-                onPressed: () {
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (_) => HomeScreen()));
-                },
-                icon: const Icon(
-                  CupertinoIcons.home,
-                  size: 27,
-                ),
-              ),
-            ],
-          ),
+          //app bar
+          appBar: AppBar(title: const Text('Profile Screen')),
+
+          //floating button to log out
           floatingActionButton: Padding(
-            // for that button in the bottom to add new users
-            padding: const EdgeInsets.symmetric(vertical: 33, horizontal: 18),
+            padding: const EdgeInsets.only(bottom: 10),
             child: FloatingActionButton.extended(
-              backgroundColor: Colors.redAccent,
-              onPressed: () async {
-                Dialogs.showProgressBar(context);
-                await Api.auth.signOut().then(
-                  (value) async {
+                backgroundColor: Colors.redAccent,
+                onPressed: () async {
+                  //for showing progress dialog
+                  Dialogs.showProgressBar(context);
+
+                  await Api.updateActiveStatus(false);
+
+                  //sign out from app
+                  await Api.auth.signOut().then((value) async {
                     await GoogleSignIn().signOut().then((value) {
+                      //for hiding progress dialog
                       Navigator.pop(context);
+
+                      //for moving to home screen
                       Navigator.pop(context);
+
+                      // APIs.auth = FirebaseAuth.instance;
+
+                      //replacing home screen with login screen
                       Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                               builder: (_) => const LoginScreen()));
                     });
-                  },
-                );
-              },
-              icon: const Icon(
-                Icons.logout,
-                color: Colors.white,
-                size: 26,
-              ),
-              label: const Text(
-                "Logout",
-                style: TextStyle(fontSize: 16),
-              ),
-            ),
+                  });
+                },
+                icon: const Icon(Icons.logout),
+                label: const Text('Logout')),
           ),
+
+          //body
           body: Form(
             key: _formKey,
             child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: mq.width * .05,
-              ),
+              padding: EdgeInsets.symmetric(horizontal: mq.width * .05),
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    SizedBox(
-                      width: mq.width,
-                      height: mq.height * .03,
-                    ),
+                    // for adding some space
+                    SizedBox(width: mq.width, height: mq.height * .03),
+
+                    //user profile picture
                     Stack(
                       children: [
+                        //profile picture
                         _image != null
-                            ? ClipRRect(
+                            ?
+
+                            //local image
+                            ClipRRect(
                                 borderRadius:
                                     BorderRadius.circular(mq.height * .1),
-                                child: Image.file(
-                                  File(_image!),
-                                  height: mq.height * .2,
-                                  width: mq.width * .4,
-                                  fit: BoxFit.cover,
-                                ),
-                              )
-                            : ClipRRect(
+                                child: Image.file(File(_image!),
+                                    width: mq.height * .2,
+                                    height: mq.height * .2,
+                                    fit: BoxFit.cover))
+                            :
+
+                            //image from server
+                            ClipRRect(
                                 borderRadius:
                                     BorderRadius.circular(mq.height * .1),
                                 child: CachedNetworkImage(
+                                  width: mq.height * .2,
                                   height: mq.height * .2,
-                                  width: mq.width * .4,
                                   fit: BoxFit.cover,
                                   imageUrl: widget.user.image,
-                                  placeholder: (context, url) =>
-                                      CircularProgressIndicator(),
                                   errorWidget: (context, url, error) =>
                                       const CircleAvatar(
-                                          child: Icon(
-                                    CupertinoIcons.person_fill,
-                                    color: Colors.blueAccent,
-                                  )),
+                                          child: Icon(CupertinoIcons.person)),
                                 ),
                               ),
+
+                        //edit image button
                         Positioned(
                           bottom: 0,
                           right: 0,
@@ -130,82 +121,80 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             onPressed: () {
                               _showBottomSheet();
                             },
-                            color: Colors.white,
                             shape: const CircleBorder(),
-                            child: const Icon(
-                              Icons.edit,
-                              color: Colors.blue,
-                            ),
+                            color: Colors.white,
+                            child: const Icon(Icons.edit, color: Colors.blue),
                           ),
-                        ),
+                        )
                       ],
                     ),
+
+                    // for adding some space
                     SizedBox(height: mq.height * .03),
-                    Text(
-                      widget.user.email,
-                      style:
-                          const TextStyle(color: Colors.black54, fontSize: 18),
-                    ),
-                    SizedBox(height: mq.height * .06),
+
+                    // user email label
+                    Text(widget.user.email,
+                        style: const TextStyle(
+                            color: Colors.black54, fontSize: 16)),
+
+                    // for adding some space
+                    SizedBox(height: mq.height * .05),
+
+                    // name input field
                     TextFormField(
                       initialValue: widget.user.name,
-                      onSaved: (val) => Api.me.name = val ?? " ",
+                      onSaved: (val) => Api.me.name = val ?? '',
                       validator: (val) => val != null && val.isNotEmpty
                           ? null
-                          : "Required Field",
+                          : 'Required Field',
                       decoration: InputDecoration(
-                        prefixIcon: Icon(
-                          Icons.person_sharp,
-                          color: Colors.blue,
-                        ),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(14)),
-                        hintText: "Eg - Utkarsh Khajuria",
-                        label: Text("Name"),
-                      ),
+                          prefixIcon:
+                              const Icon(Icons.person, color: Colors.blue),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12)),
+                          hintText: 'eg. Utkarsh Khajuria',
+                          label: const Text('Name')),
                     ),
+
+                    // for adding some space
                     SizedBox(height: mq.height * .02),
+
+                    // about input field
                     TextFormField(
                       initialValue: widget.user.about,
-                      onSaved: (val) => Api.me.about = val ?? " ",
+                      onSaved: (val) => Api.me.about = val ?? '',
                       validator: (val) => val != null && val.isNotEmpty
                           ? null
-                          : "Required Field",
+                          : 'Required Field',
                       decoration: InputDecoration(
-                        prefixIcon: const Icon(
-                          Icons.info_outline,
-                          color: Colors.blue,
-                        ),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(14)),
-                        hintText: "Eg - Hey there, I'm using EvoChat!",
-                        label: Text("About"),
-                      ),
+                          prefixIcon: const Icon(Icons.info_outline,
+                              color: Colors.blue),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12)),
+                          hintText: 'eg. Feeling Happy',
+                          label: const Text('About')),
                     ),
-                    SizedBox(height: mq.height * .03),
+
+                    // for adding some space
+                    SizedBox(height: mq.height * .05),
+
+                    // update profile button
                     ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
                           shape: const StadiumBorder(),
-                          minimumSize: Size(mq.width * .4, mq.height * .055),
-                          backgroundColor: Colors.blue),
+                          minimumSize: Size(mq.width * .5, mq.height * .06)),
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           _formKey.currentState!.save();
-                          Api.updateUserInfo().then((value) => {
-                                Dialogs.showSnackbar(context,
-                                    "Your Profile Updated Successfully!")
-                              });
-                        } else {}
+                          Api.updateUserInfo().then((value) {
+                            Dialogs.showSnackbar(
+                                context, 'Profile Updated Successfully!');
+                          });
+                        }
                       },
-                      icon: Icon(
-                        Icons.update,
-                        size: 26,
-                        color: Colors.white,
-                      ),
-                      label: Text(
-                        "Update Profile",
-                        style: TextStyle(fontSize: 16, color: Colors.black),
-                      ),
+                      icon: const Icon(Icons.edit, size: 28),
+                      label: const Text('Update Profile',
+                          style: TextStyle(fontSize: 16)),
                     )
                   ],
                 ),
@@ -215,6 +204,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
+  // bottom sheet for picking a profile picture for user
   void _showBottomSheet() {
     showModalBottomSheet(
         context: context,
@@ -227,55 +217,69 @@ class _ProfileScreenState extends State<ProfileScreen> {
             padding:
                 EdgeInsets.only(top: mq.height * .03, bottom: mq.height * .05),
             children: [
-              const Text("Pick Profile Picture",
+              //pick profile picture label
+              const Text('Pick Profile Picture',
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700)),
-              SizedBox(
-                height: mq.height * .02,
-              ),
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
+
+              //for adding some space
+              SizedBox(height: mq.height * .02),
+
+              //buttons
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
+                  //pick from gallery button
                   ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white,
-                          shape: CircleBorder(),
+                          shape: const CircleBorder(),
                           fixedSize: Size(mq.width * .3, mq.height * .15)),
                       onPressed: () async {
                         final ImagePicker picker = ImagePicker();
+
+                        // Pick an image
                         final XFile? image = await picker.pickImage(
-                          source: ImageSource.gallery,
-                        );
+                            source: ImageSource.gallery, imageQuality: 80);
                         if (image != null) {
-                          print(
-                              'Image Path: ${image.path} -- MimeType: ${image.mimeType}');
+                          log('Image Path: ${image.path}');
                           setState(() {
                             _image = image.path;
                           });
+
                           Api.updateProfilePicture(File(_image!));
-                          Navigator.pop(context);
+
+                          // for hiding bottom sheet
+                          if (mounted) Navigator.pop(context);
                         }
                       },
-                      child: Image.asset('assets/images/image_add.png')),
+                      child: Image.asset('images/add_image.png')),
+
+                  //take picture from camera button
                   ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white,
-                          shape: CircleBorder(),
+                          shape: const CircleBorder(),
                           fixedSize: Size(mq.width * .3, mq.height * .15)),
                       onPressed: () async {
                         final ImagePicker picker = ImagePicker();
-                        final XFile? image =
-                            await picker.pickImage(source: ImageSource.camera);
+
+                        // Pick an image
+                        final XFile? image = await picker.pickImage(
+                            source: ImageSource.camera, imageQuality: 80);
                         if (image != null) {
-                          print('Image Path: ${image.path}');
+                          log('Image Path: ${image.path}');
                           setState(() {
                             _image = image.path;
                           });
+
                           Api.updateProfilePicture(File(_image!));
-                          Navigator.pop(context);
+
+                          // for hiding bottom sheet
+                          if (mounted) Navigator.pop(context);
                         }
                       },
-                      child: Image.asset('assets/images/camera.png'))
+                      child: Image.asset('images/camera.png')),
                 ],
               )
             ],
