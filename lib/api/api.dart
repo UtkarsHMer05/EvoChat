@@ -94,4 +94,8 @@ class Api {
       'image': me.image,
     });
   }
+
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getAllMessages() {
+    return Api.firestore.collection('messages').snapshots();
+  }
 }

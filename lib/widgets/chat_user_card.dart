@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:evo_chat/main.dart';
 import 'package:evo_chat/models/chat_user.dart';
+import 'package:evo_chat/screens/chat_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +23,14 @@ class _ChatUserCardState extends State<ChatUserCard> {
       elevation: 0.5,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (_) => ChatScreen(
+                        user: widget.user,
+                      )));
+        },
         child: ListTile(
             //user profile picture
             // child: Icon(
@@ -36,7 +44,6 @@ class _ChatUserCardState extends State<ChatUserCard> {
                 width: mq.width * .1,
                 fit: BoxFit.fill,
                 imageUrl: widget.user.image,
-                placeholder: (context, url) => CircularProgressIndicator(),
                 errorWidget: (context, url, error) => const CircleAvatar(
                     child: Icon(
                   CupertinoIcons.person_fill,
