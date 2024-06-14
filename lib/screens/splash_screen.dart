@@ -21,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
       //exit full screen
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
 
-      SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
           systemNavigationBarColor: Colors.white,
           statusBarColor: Colors.white));
       //navigation to home screen
@@ -45,7 +45,10 @@ class _SplashScreenState extends State<SplashScreen> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         //title for app bar
-        title: const Text(" Welcome to EvoChat 🚀"),
+        title: const Text(
+          " Welcome to EvoChat 🚀",
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+        ),
       ),
       //body
       body: Stack(

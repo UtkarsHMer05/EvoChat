@@ -83,10 +83,15 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Scaffold(
           //app bar
           appBar: AppBar(
-            leading: const Icon(
-              CupertinoIcons.home,
-              size: 27,
-            ),
+            leading: IconButton(
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => const HomeScreen()));
+                },
+                icon: const Icon(
+                  CupertinoIcons.home,
+                  size: 27,
+                )),
             title: _isSearching
                 ? TextField(
                     decoration: const InputDecoration(
@@ -111,6 +116,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   )
                 : const Text('EvoChat 🚀'),
             actions: [
+              IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => ProfileScreen(user: Api.me)));
+                  },
+                  icon: const Icon(Icons.more_vert)),
               //search user button
               IconButton(
                   onPressed: () {
@@ -123,14 +136,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       : Icons.search)),
 
               //more features button
-              IconButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (_) => ProfileScreen(user: Api.me)));
-                  },
-                  icon: const Icon(Icons.more_vert))
             ],
           ),
 

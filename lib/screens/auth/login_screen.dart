@@ -94,7 +94,10 @@ class _LoginScreenState extends State<LoginScreen> {
       //app bar
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Text('Welcome to EvoChat 🚀'),
+        title: const Text(
+          'Welcome to EvoChat 🚀',
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+        ),
       ),
 
       //body
@@ -102,10 +105,10 @@ class _LoginScreenState extends State<LoginScreen> {
         //app logo
         AnimatedPositioned(
             top: mq.height * .15,
-            right: _isAnimate ? mq.width * .25 : -mq.width * .5,
-            width: mq.width * .5,
+            right: _isAnimate ? mq.width * .10 : -mq.width * .8,
+            width: mq.width * .8,
             duration: const Duration(seconds: 1),
-            child: Image.asset('assets/images/icon.png')),
+            child: Image.asset('assets/images/chat.png')),
 
         //google login button
         Positioned(
@@ -129,12 +132,16 @@ class _LoginScreenState extends State<LoginScreen> {
                 //login with google label
                 label: RichText(
                   text: const TextSpan(
-                      style: TextStyle(color: Colors.black, fontSize: 16),
+                      style: TextStyle(color: Colors.black, fontSize: 18),
                       children: [
-                        TextSpan(text: "Signin' with "),
+                        TextSpan(
+                            text: "Signin' with ",
+                            style: TextStyle(color: Colors.purple)),
                         TextSpan(
                             text: 'Google',
-                            style: TextStyle(fontWeight: FontWeight.w500)),
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.purple)),
                       ]),
                 ))),
       ]),

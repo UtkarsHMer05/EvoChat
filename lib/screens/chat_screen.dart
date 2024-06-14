@@ -54,9 +54,7 @@ class _ChatScreenState extends State<ChatScreen> {
         onPopInvoked: (_) async {
           if (_showEmoji) {
             setState(() => _showEmoji = !_showEmoji);
-          } else {
-            Navigator.of(context).pop();
-          }
+          } else {}
         },
 
         //
