@@ -1,10 +1,6 @@
-import 'dart:developer';
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_notification_channel/flutter_notification_channel.dart';
-import 'package:flutter_notification_channel/notification_importance.dart';
 
 import 'firebase_options.dart';
 import 'screens/splash_screen.dart';
@@ -42,7 +38,7 @@ class MyApp extends StatelessWidget {
           iconTheme: IconThemeData(color: Colors.black),
           titleTextStyle: TextStyle(
               color: Colors.black, fontWeight: FontWeight.normal, fontSize: 19),
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.greenAccent,
         )),
         home: const SplashScreen());
   }
@@ -51,11 +47,11 @@ class MyApp extends StatelessWidget {
 _initializeFirebase() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  var result = await FlutterNotificationChannel().registerNotificationChannel(
-      description: 'For Showing Message Notification',
-      id: 'chats',
-      importance: NotificationImportance.IMPORTANCE_HIGH,
-      name: 'Chats');
+  // var result = await FlutterNotificationChannel().registerNotificationChannel(
+  //     description: 'For Showing Message Notification',
+  //     id: 'chats',
+  //     importance: NotificationImportance.IMPORTANCE_HIGH,
+  //     name: 'Chats');
 
-  log('\nNotification Channel Result: $result');
+  // log('\nNotification Channel Result: $result');
 }
