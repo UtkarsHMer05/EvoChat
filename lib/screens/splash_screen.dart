@@ -1,7 +1,7 @@
-import 'package:evo_chat/api/api.dart';
-import 'package:evo_chat/main.dart';
-import 'package:evo_chat/screens/auth/login_screen.dart';
-import 'package:evo_chat/screens/home_screen.dart';
+import 'package:EvoChat/api/api.dart';
+import 'package:EvoChat/main.dart';
+import 'package:EvoChat/screens/auth/login_screen.dart';
+import 'package:EvoChat/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

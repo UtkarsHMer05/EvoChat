@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:evo_chat/api/api.dart';
+import 'package:EvoChat/api/api.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
