@@ -114,7 +114,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       }
                     },
                   )
-                : const Text('EvoChat 🚀'),
+                : const Text(
+                    'EvoChat 🚀',
+                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                  ),
             actions: [
               IconButton(
                   onPressed: () {
@@ -123,7 +126,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         MaterialPageRoute(
                             builder: (_) => ProfileScreen(user: Api.me)));
                   },
-                  icon: const Icon(Icons.more_vert)),
+                  icon: const Icon(
+                    Icons.more_vert,
+                    size: 27,
+                  )),
               //search user button
               IconButton(
                   onPressed: () {
@@ -131,9 +137,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       _isSearching = !_isSearching;
                     });
                   },
-                  icon: Icon(_isSearching
-                      ? CupertinoIcons.clear_circled_solid
-                      : Icons.search)),
+                  icon: Icon(
+                    _isSearching
+                        ? CupertinoIcons.clear_circled_solid
+                        : Icons.search,
+                    size: 27,
+                  )),
 
               //more features button
             ],
