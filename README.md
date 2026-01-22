@@ -3,7 +3,7 @@
 EvoChat is a next-generation messaging app inspired by WhatsApp, offering a seamless and feature-rich communication experience. Built with modern technologies, EvoChat enhances traditional messaging with improved security, performance, and user-friendly features. Future updates will include exciting functionalities like video calling and more!
 
 
-## Features
+## Features-
 ✅ **Google Sign-In** – Secure authentication with Google accounts for a hassle-free login experience.  
 ✅ **Real-Time Messaging** – Instant messaging with end-to-end encryption for privacy.  
 ✅ **Voice Notes** – Easily send voice messages to your contacts.  
